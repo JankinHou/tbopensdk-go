@@ -1,14 +1,14 @@
 # tbopensdk-go
 封装的淘宝Api的签名和请求
-#淘宝Api sign算法
+## 淘宝Api sign算法
 请移步[官方说明](https://open.taobao.com/doc.htm?docId=101617&docType=1")。
-#Example
-## 1 安装
+## Example
+### 1 安装
 ```go
 go get github.com/JankinHou/tbopensdk-go
 
 ```
-##2 创建文件，如example.go
+### 2 创建文件，如example.go
 首先需要安装Go语言和设置GoPath，此处不多说明。以获取淘宝系统当前时间api为示例
 ```go
 package main
@@ -45,11 +45,11 @@ package main
  	fmt.Println(timeres.TimeGetResponse.Time)
  }
 ```
-## 3 运行
+### 3 运行
 ```go
 go run example.go
 ```
-# 说明
+## 说明
 ##### 由于官方没有Go语言SDK，为了自己方便实用而写。
 ##### 参考过[taobaogo](https://github.com/nilorg/go-opentaobao)。
 ##### 联系作者：houzhenkai@houzhenkai.com
