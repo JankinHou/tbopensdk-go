@@ -16,28 +16,18 @@ import (
 //系统公共参数
 var (
 	//应用的appkey
-	AppKey string = ""
+	AppKey string
 	//应用的AppSecret
-	AppSecret string = ""
+	AppSecret string
 	//Router 环境请求地址
-	ApiUrl string = ""
+	ApiUrl string
 	// Timeout ...
 	Timeout time.Duration
-	Session string = ""
+	Session string
 )
 
 //业务参数
 type ApiParams map[string]string
-
-//定义公共参数
-var CommParams = map[string]string{
-	"timestamp":   GetTime(0),
-	"app_key":     AppKey,
-	"v":           "2.0",
-	"format":      "json",
-	"sign_method": "md5",
-	"session":     Session,
-}
 
 //error 结构体
 type ErrRespone struct {
@@ -51,7 +41,16 @@ type ErrRespone struct {
 
 //发送请求
 func RequestApi(method string, param ApiParams) (res []byte, err error) {
-	param["method"] = method
+	//定义公共参数
+	var CommParams = map[string]string{
+		"timestamp":   GetTime(0),
+		"app_key":     AppKey,
+		"v":           "2.0",
+		"format":      "json",
+		"sign_method": "md5",
+		"session":     Session,
+		"method":      method,
+	}
 	//合并两个参数
 	for k, v := range param {
 		CommParams[k] = v
