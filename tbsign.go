@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -62,10 +61,7 @@ func RequestApi(method string, param ApiParams) (res []byte, err error) {
 	for k, v := range CommParams {
 		urlParams.Set(k, v)
 	}
-	result, er := HttpPost(ApiUrl, urlParams.Encode())
-	if er != nil {
-		err = er
-	}
+	result := HttpPost(ApiUrl, urlParams.Encode())
 	var respone = &ErrRespone{}
 	json.Unmarshal(result, respone)
 	if respone.ErrorResponse.Code != 0 {
@@ -106,21 +102,13 @@ func sign(params map[string]string) string {
 发送post请求
 传入URL和参数   参数是 name=a  格式
 */
-func HttpPost(url string, params string) (result []byte, err error) {
-	resp, _ := http.NewRequest("POST", url, strings.NewReader(params))
-	resp.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-	httpClient := &http.Client{}
-	httpClient.Timeout = Timeout
-	response, e := httpClient.Do(resp)
-	if e != nil {
-		err = e
-	}
-	if response.StatusCode != 200 {
-		err = fmt.Errorf("请求错误:%d", response.StatusCode)
-	}
-	body, err := ioutil.ReadAll(response.Body)
-
-	return body, err
+func HttpPost(url string, params string) []byte {
+	resp, _ := http.Post(url,
+		"application/x-www-form-urlencoded",
+		strings.NewReader(params))
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return body
 }
 
 /**
