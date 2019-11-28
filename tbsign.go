@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"reflect"
 	"sort"
 	"strings"
 	"time"
@@ -65,7 +64,7 @@ func RequestApi(method string, param ApiParams) (res []byte, err error) {
 	result := HttpPost(ApiUrl, urlParams.Encode())
 	var respone = &ErrRespone{}
 	json.Unmarshal(result, respone)
-	if reflect.ValueOf(respone).FieldByName("ErrorResponse").IsValid() == true {
+	if respone.ErrorResponse.Code != 0 {
 		//出现错误
 		err = errors.New(respone.ErrorResponse.SubMsg)
 	} else {
