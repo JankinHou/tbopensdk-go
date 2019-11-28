@@ -20,7 +20,7 @@ var (
 	//应用的AppSecret
 	AppSecret string = ""
 	//Router 环境请求地址
-	ApiUrl string = "http://gw.api.taobao.com/router/rest"
+	ApiUrl string = ""
 	// Timeout ...
 	Timeout time.Duration
 	Session string = ""
