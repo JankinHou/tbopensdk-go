@@ -49,8 +49,8 @@ package main
 ```go
 go run example.go
 ```
-#说明
-#####由于官方没有Go语言SDK，为了自己方便实用而写。
-#####参考过[taobaogo](https://github.com/nilorg/go-opentaobao)。
-#####联系作者：houzhenkai@houzhenkai.com
-#####[不去适用、努力改变](http://www.houzhenkai.com)
+# 说明
+##### 由于官方没有Go语言SDK，为了自己方便实用而写。
+##### 参考过[taobaogo](https://github.com/nilorg/go-opentaobao)。
+##### 联系作者：houzhenkai@houzhenkai.com
+##### [不去适用、努力改变](http://www.houzhenkai.com)
