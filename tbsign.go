@@ -60,7 +60,10 @@ func RequestApi(method string, param ApiParams) (res []byte, err error) {
 	for k, v := range CommParams {
 		urlParams.Set(k, v)
 	}
-	result := HttpPost(ApiUrl, urlParams.Encode())
+	result, err := HttpPost(ApiUrl, urlParams.Encode())
+	if err != nil {
+		return
+	}
 	var respone = &ErrRespone{}
 	json.Unmarshal(result, respone)
 	if respone.ErrorResponse.Code != 0 {
@@ -101,16 +104,19 @@ func sign(params map[string]string) string {
 发送post请求
 传入URL和参数   参数是 name=a  格式
 */
-func HttpPost(url string, params string) []byte {
+func HttpPost(url string, params string) (body []byte, err error) {
 	resp, err := http.Post(url,
 		"application/x-www-form-urlencoded",
 		strings.NewReader(params))
 	if err != nil {
-		return nil
+		return
 	}
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	return body
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+	return
 }
 
 /**
