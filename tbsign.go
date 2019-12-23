@@ -102,9 +102,12 @@ func sign(params map[string]string) string {
 传入URL和参数   参数是 name=a  格式
 */
 func HttpPost(url string, params string) []byte {
-	resp, _ := http.Post(url,
+	resp, err := http.Post(url,
 		"application/x-www-form-urlencoded",
 		strings.NewReader(params))
+	if err != nil {
+		return nil
+	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
