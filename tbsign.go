@@ -4,7 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -68,7 +68,7 @@ func RequestApi(method string, param ApiParams) (res []byte, err error) {
 	json.Unmarshal(result, respone)
 	if respone.ErrorResponse.Code != 0 {
 		//出现错误
-		err = errors.New(respone.ErrorResponse.SubMsg)
+		err = fmt.Errorf("sub_code:%s,sub_msg:%s,code:%d,msg:%s", respone.ErrorResponse.SubCode, respone.ErrorResponse.SubMsg, respone.ErrorResponse.Code, respone.ErrorResponse.Msg)
 	} else {
 		res = result
 
